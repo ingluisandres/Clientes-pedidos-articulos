@@ -9,7 +9,7 @@ class _ClientBase(_pydantic.BaseModel):
     name: str
     last_name: str
     email: str
-    phone_number: Optional[int]
+    phone_number: int
     address: Optional[str]
     postal_code: Optional[int]
 
