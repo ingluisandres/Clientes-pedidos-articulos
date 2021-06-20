@@ -1,6 +1,7 @@
 from typing import List
 import pydantic as _pydantic
 import datetime as _dt
+from typing import List, Optional
 
 
 # Client
@@ -8,16 +9,16 @@ class _ClientBase(_pydantic.BaseModel):
     name: str
     last_name: str
     email: str
-    phone_number: str
-    address: str
-    postal_code: str
+    phone_number: Optional[int]
+    address: Optional[str]
+    postal_code: Optional[int]
 
 class ClientCreate(_ClientBase):
     pass
 
 class Client(_ClientBase):
     id: int
-    # orders: List[Order] = []
+    # orders_client: List[Order] = []
 
     class Config:
         orm_mode = True
@@ -27,7 +28,7 @@ class Client(_ClientBase):
 class _ItemBase(_pydantic.BaseModel):
     title: str
     description: str
-    price: str
+    price: int
 
 class ItemCreate(_ItemBase):
     pass
@@ -41,7 +42,7 @@ class Item(_ItemBase):
 
 # Order
 class _OrderBase(_pydantic.BaseModel):
-    units: str
+    units: int
 
 class OrderCreate(_OrderBase):
     pass

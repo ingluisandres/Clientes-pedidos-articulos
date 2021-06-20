@@ -11,11 +11,11 @@ class Client(_database.Base):
 
     __tablename__ = "clients"
     id = _sql.Column(_sql.Integer, primary_key=True, index=True)
-    name = _sql.Column(_sql.String, unique=True, index=True)
-    last_name = _sql.Column(_sql.String, unique=True, index=True)
+    name = _sql.Column(_sql.String, index=True)
+    last_name = _sql.Column(_sql.String, index=True)
     email = _sql.Column(_sql.String, unique=True, index=True)
-    phone_number = _sql.Column(_sql.Integer, index=True)
-    address = _sql.Column(_sql.String, unique=True, index=True)
+    phone_number = _sql.Column(_sql.Integer, unique=True)
+    address = _sql.Column(_sql.String, index=True)
     postal_code = _sql.Column(_sql.Integer, index=True)
 
     orders_client = _orm.relationship("Order", back_populates="owner")
@@ -36,7 +36,7 @@ class Order(_database.Base):
     id = _sql.Column(_sql.Integer, primary_key=True, index=True)
     client_id = _sql.Column(_sql.Integer, _sql.ForeignKey("clients.id"))
     items_id = _sql.Column(_sql.Integer, _sql.ForeignKey("items.id"))
-    units = _sql.Column(_sql.String, index= True)
+    units = _sql.Column(_sql.Integer, index= True)
     date_created = _sql.Column(_sql.DateTime, default=_dt.datetime.utcnow)
 
     owner = _orm.relationship("Client",back_populates="orders_client")
