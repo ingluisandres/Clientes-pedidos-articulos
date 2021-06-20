@@ -42,6 +42,8 @@ class Item(_ItemBase):
 
 # Order
 class _OrderBase(_pydantic.BaseModel):
+    client_id: int
+    items_id: int
     units: int
 
 class OrderCreate(_OrderBase):
@@ -49,8 +51,6 @@ class OrderCreate(_OrderBase):
 
 class Order(_OrderBase):
     id: int
-    client_id: int
-    items_id: int
     date_created: _dt.datetime
 
     class Config:

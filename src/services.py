@@ -27,3 +27,24 @@ def create_client(db: _orm.Session, client: _schemas.ClientCreate):
     db.commit()
     db.refresh(db_client)
     return db_client
+
+
+# Item
+def get_item_by_title(db: _orm.Session, title:str):
+    return db.query(_models.Item).filter(_models.Item.title==title).first()
+
+def create_item(db: _orm.Session, item: _schemas.ItemCreate):
+    db_item = _models.Item(title= item.title, description= item.description, price=item.price)
+    db.add(db_item)
+    db.commit()
+    db.refresh(db_item)
+    return db_item
+
+
+# Order
+def create_order(db: _orm.Session, order: _schemas.OrderCreate):
+    db_order = _models.Order(client_id=order.client_id, items_id=order.items_id, units= order.units)
+    db.add(db_order)
+    db.commit()
+    db.refresh(db_order)
+    return db_order
