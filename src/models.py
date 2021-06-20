@@ -14,7 +14,7 @@ class Client(_database.Base):
     name = _sql.Column(_sql.String, index=True)
     last_name = _sql.Column(_sql.String, index=True)
     email = _sql.Column(_sql.String, unique=True, index=True)
-    phone_number = _sql.Column(_sql.Integer, unique=True)
+    phone_number = _sql.Column(_sql.Integer, unique=True, index=True)
     address = _sql.Column(_sql.String, index=True)
     postal_code = _sql.Column(_sql.Integer, index=True)
 
