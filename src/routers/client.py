@@ -7,9 +7,12 @@ import schemas as _schemas
 import services as _services
 
 
-router = APIRouter()
+router = APIRouter(
+    prefix="/clients",
+    tags=["clients"]
+)
 
-@router.post("/clients/", response_model=_schemas.Client, tags=["clients"])
+@router.post("/", response_model=_schemas.Client)
 def create(client: _schemas.ClientCreate, db: _orm.Session=Depends(_services.get_db)):
     db_client = _services.get_client_by_email(db=db, email=client.email)
     if db_client:

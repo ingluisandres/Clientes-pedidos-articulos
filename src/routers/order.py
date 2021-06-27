@@ -7,9 +7,12 @@ import schemas as _schemas
 import services as _services
 
 
-router = APIRouter()
+router = APIRouter(
+    prefix="/orders",
+    tags=["orders"]
+)
 
-@router.post("/orders/", response_model=_schemas.Order, tags=["orders"])
+@router.post("/", response_model=_schemas.Order)
 def create(order: _schemas.OrderCreate, db: _orm.Session=Depends(_services.get_db)):
 
     return _services.create_order(db=db, order=order)

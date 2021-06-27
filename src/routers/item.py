@@ -7,9 +7,12 @@ import schemas as _schemas
 import services as _services
 
 
-router = APIRouter()
+router = APIRouter(
+    prefix="/items",
+    tags=["items"]
+)
 
-@router.post("/items/", response_model=_schemas.Item, tags=["items"])
+@router.post("/", response_model=_schemas.Item)
 def create(item: _schemas.ItemCreate, db: _orm.Session=Depends(_services.get_db)):
     db_item = _services.get_item_by_title(db=db, title=item.title)
     if db_item:
