@@ -9,3 +9,6 @@ def create_order(db: _orm.Session, order: _schemas.OrderCreate):
     db.commit()
     db.refresh(db_order)
     return db_order
+
+def get_orders(db:_orm.Session, skip:int, limit:int):
+    return db.query(_models.Order).offset(skip).limit(limit).all()

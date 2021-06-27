@@ -12,3 +12,6 @@ def create_item(db: _orm.Session, item: _schemas.ItemCreate):
     db.commit()
     db.refresh(db_item)
     return db_item
+
+def get_items(db:_orm.Session, skip:int, limit:int):
+    return db.query(_models.Item).offset(skip).limit(limit).all()
