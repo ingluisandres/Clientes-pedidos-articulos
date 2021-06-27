@@ -5,6 +5,7 @@ from fastapi import APIRouter, HTTPException, Depends
 import sqlalchemy.orm as _orm
 import schemas as _schemas
 import services as _services
+import database as _database
 
 
 router = APIRouter(
@@ -13,7 +14,7 @@ router = APIRouter(
 )
 
 @router.post("/", response_model=_schemas.Item)
-def create(item: _schemas.ItemCreate, db: _orm.Session=Depends(_services.get_db)):
+def create(item: _schemas.ItemCreate, db: _orm.Session=Depends(_database.get_db)):
     db_item = _services.get_item_by_title(db=db, title=item.title)
     if db_item:
         raise HTTPException(status_code=400, detail="woops the title is in use")

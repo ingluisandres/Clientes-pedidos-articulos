@@ -7,16 +7,6 @@ import schemas as _schemas
 import datetime as _dt
 
 
-def create_database():
-    return _database.Base.metadata.create_all(bind=_database.engine)
-
-def get_db():
-    db = _database.SessionLocal()
-    try:
-        yield db
-    finally:
-        db.close()
-
 # Client
 def get_client_by_email(db: _orm.Session, email:str):
     return db.query(_models.Client).filter(_models.Client.email==email).first()

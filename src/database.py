@@ -11,3 +11,14 @@ engine = _sql.create_engine(
 SessionLocal = _orm.sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
 Base = _declarative.declarative_base()
+
+
+def create_database():
+    return Base.metadata.create_all(bind=engine)
+
+def get_db():
+    db = SessionLocal()
+    try:
+        yield db
+    finally:
+        db.close()

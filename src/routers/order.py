@@ -5,6 +5,7 @@ from fastapi import APIRouter, Depends
 import sqlalchemy.orm as _orm
 import schemas as _schemas
 import services as _services
+import database as _database
 
 
 router = APIRouter(
@@ -13,6 +14,6 @@ router = APIRouter(
 )
 
 @router.post("/", response_model=_schemas.Order)
-def create(order: _schemas.OrderCreate, db: _orm.Session=Depends(_services.get_db)):
+def create(order: _schemas.OrderCreate, db: _orm.Session=Depends(_database.get_db)):
 
     return _services.create_order(db=db, order=order)
