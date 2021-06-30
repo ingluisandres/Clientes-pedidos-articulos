@@ -29,4 +29,4 @@ def override_get_db():
 app.dependency_overrides[get_db] = override_get_db
 
 
-client = TestClient(app)
+test = TestClient(app)

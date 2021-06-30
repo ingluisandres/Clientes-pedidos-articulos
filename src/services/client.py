@@ -44,3 +44,7 @@ def update_client(
     db.commit()
     db.refresh(db_client)
     return db_client
+
+def delete_client(db: _orm.Session, client_id:int):
+    db.query(_models.Client).filter(_models.Client.id == client_id).delete()
+    db.commit()

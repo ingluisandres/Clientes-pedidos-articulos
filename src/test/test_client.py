@@ -1,8 +1,8 @@
-from src.test.app import client
+from src.test.app import test
 
 
 def test_create_client():
-    response = client.post(
+    response = test.post(
         "/clients/",
         json={
             "name": "Rodrigo", 
@@ -20,14 +20,14 @@ def test_create_client():
     assert "id" in data
 
 def test_get_client():
-    response = client.get(f"/clients/1")
+    response = test.get(f"/clients/1")
     assert response.status_code == 200, response.text
     data = response.json()
     assert data["email"] == "ingluisandres3@gmail.com"
     assert data["phone_number"] == 8116952022
 
 def test_update_client():
-    response = client.put(
+    response = test.put(
         "/clients/1",
         json={
             "name": "Luis", 
@@ -42,3 +42,13 @@ def test_update_client():
     data = response.json()
     assert data["email"] == "andy031197@gmail.com"
     assert data["phone_number"] == 8116952021
+
+def test_delete_client():
+    response = test.delete(f"/clients/1")
+    data = response.json()
+    assert response.status_code == 200, response.text
+    assert data == {'message': 'successfully deleted client with id: 1'}
+    
+    test_response = test.get(f"/clients/1")
+    test_data = test_response.json()
+    assert test_data == {'detail': 'sorry this client does not exist'}

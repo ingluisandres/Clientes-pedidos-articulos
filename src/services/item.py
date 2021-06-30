@@ -36,3 +36,7 @@ def update_item(
     db.commit()
     db.refresh(db_item)
     return db_item
+
+def delete_item(db: _orm.Session, item_id:int):
+    db.query(_models.Item).filter(_models.Item.id == item_id).delete()
+    db.commit()

@@ -1,7 +1,7 @@
 import sys
 sys.path.append("..")
 
-from fastapi import APIRouter, HTTPException, Depends
+from fastapi import APIRouter, Depends, HTTPException
 from typing import List, Optional
 import sqlalchemy.orm as _orm
 
@@ -54,3 +54,16 @@ def update_client(
             client: _schemas.ClientCreate,
             db: _orm.Session = Depends(_database.get_db)):
     return _services.update_client(db=db, client=client, client_id=client_id)
+
+@router.delete("/{client_id}")
+def delete_client(
+            client_id: int, 
+            db: _orm.Session = Depends(_database.get_db)):
+    db_client = _services.get_client(db=db, client_id=client_id)
+    if db_client is None:
+        raise HTTPException(
+            status_code=404, detail="sorry this client does not exist"
+        )
+    
+    _services.delete_client(db=db, client_id=client_id)
+    return{"message":f"successfully deleted client with id: {client_id}"}

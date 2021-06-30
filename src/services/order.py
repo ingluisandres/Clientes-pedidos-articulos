@@ -33,3 +33,7 @@ def update_order(
     db.commit()
     db.refresh(db_order)
     return db_order
+
+def delete_order(db: _orm.Session, order_id:int):
+    db.query(_models.Order).filter(_models.Order.id == order_id).delete()
+    db.commit()

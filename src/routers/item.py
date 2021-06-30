@@ -1,7 +1,7 @@
 import sys
 sys.path.append("..")
 
-from fastapi import APIRouter, HTTPException, Depends
+from fastapi import APIRouter, Depends, HTTPException
 from typing import List
 import sqlalchemy.orm as _orm
 
@@ -48,3 +48,15 @@ def update_item(
             item: _schemas.ItemCreate,
             db: _orm.Session = Depends(_database.get_db)):
     return _services.update_item(db=db, item=item, item_id=item_id)
+
+@router.delete('/{item_id}')
+def delete_item(
+            item_id: int, 
+            db: _orm.Session = Depends(_database.get_db)):
+    db_item = _services.get_item(db=db, item_id=item_id)
+    if db_item is None:
+        raise HTTPException(
+            status_code=404, detail='sorry this item does not exist'
+        )
+    _services.delete_item(db=db, item_id=item_id)
+    return{'message':f'successfully deleted item with id: {item_id}'}
