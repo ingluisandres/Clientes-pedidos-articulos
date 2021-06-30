@@ -16,3 +16,6 @@ def create_order(db: _orm.Session, order: _schemas.OrderCreate):
 
 def get_orders(db:_orm.Session, skip:int, limit:int):
     return db.query(_models.Order).offset(skip).limit(limit).all()
+
+def get_order(db: _orm.Session, order_id:int):
+    return db.query(_models.Order).filter(_models.Order.id == order_id).first()

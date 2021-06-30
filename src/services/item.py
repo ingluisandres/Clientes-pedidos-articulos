@@ -19,3 +19,6 @@ def create_item(db: _orm.Session, item: _schemas.ItemCreate):
 
 def get_items(db:_orm.Session, skip:int, limit:int):
     return db.query(_models.Item).offset(skip).limit(limit).all()
+
+def get_item(db: _orm.Session, item_id:int):
+    return db.query(_models.Item).filter(_models.Item.id == item_id).first()

@@ -34,5 +34,16 @@ def read_all(
             limit: int=10, 
             db: _orm.Session=Depends(_database.get_db)):
     """Without test"""
-    users = _services.get_users(db=db, skip=skip, limit=limit)
+    users = _services.get_clients(db=db, skip=skip, limit=limit)
     return users
+
+@router.get("/{client_id}", response_model=_schemas.Client)
+def read_client(
+            client_id: int, 
+            db: _orm.Session=Depends(_database.get_db)):
+    db_client = _services.get_client(db=db, client_id=client_id)
+    if db_client is None:
+        raise HTTPException(
+            status_code=404, detail="sorry this client does not exist"
+        )
+    return db_client

@@ -1,5 +1,6 @@
 from src.test.app import client
 
+
 def test_create_order():
     response = client.post(
         "/orders/",
@@ -12,3 +13,8 @@ def test_create_order():
     assert response.status_code == 200, response.text
     data = response.json()
     assert "id" in data
+
+def test_get_order():
+    response = client.get(f"/orders/1")
+    assert response.status_code == 200, response.text
+    data = response.json()

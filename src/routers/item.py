@@ -30,3 +30,14 @@ def read_all(
             limit: int=10, 
             db: _orm.Session=Depends(_database.get_db)):
     return services.get_items(db=db, skip=skip, limit=limit)
+
+@router.get('/{item_id}', response_model=_schemas.Item)
+def read_item(
+            item_id: int, 
+            db: _orm.Session=Depends(_database.get_db)):
+    db_item = _services.get_item(db=db, item_id=item_id)
+    if db_item is None:
+        raise HTTPException(
+            status_code=404, detail='sorry this item does not exist'
+        )
+    return db_item

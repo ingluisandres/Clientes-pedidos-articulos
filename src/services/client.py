@@ -22,5 +22,8 @@ def create_client(db: _orm.Session, client: _schemas.ClientCreate):
     db.refresh(db_client)
     return db_client
 
-def get_users(db:_orm.Session, skip:int, limit:int):
+def get_clients(db:_orm.Session, skip:int, limit:int):
     return db.query(_models.Client).offset(skip).limit(limit).all()
+
+def get_client(db: _orm.Session, client_id:int):
+    return db.query(_models.Client).filter(_models.Client.id == client_id).first()
