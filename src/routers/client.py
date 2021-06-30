@@ -47,3 +47,10 @@ def read_client(
             status_code=404, detail="sorry this client does not exist"
         )
     return db_client
+
+@router.put("/{client_id}", response_model=_schemas.Client)
+def update_client(
+            client_id: int, 
+            client: _schemas.ClientCreate,
+            db: _orm.Session = Depends(_database.get_db)):
+    return _services.update_client(db=db, client=client, client_id=client_id)

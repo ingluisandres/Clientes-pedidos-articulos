@@ -41,3 +41,10 @@ def read_item(
             status_code=404, detail='sorry this item does not exist'
         )
     return db_item
+
+@router.put('/{item_id}', response_model=_schemas.Item)
+def update_item(
+            item_id: int, 
+            item: _schemas.ItemCreate,
+            db: _orm.Session = Depends(_database.get_db)):
+    return _services.update_item(db=db, item=item, item_id=item_id)

@@ -20,3 +20,16 @@ def test_get_item():
     assert response.status_code == 200, response.text
     data = response.json()
     assert data["title"] == "Test title"
+
+def test_update_item():
+    response = client.put(
+        '/items/1',
+        json={
+            "title": "Updated title",
+            "description": "Updated description",
+            "price": 20000
+            },
+    )
+    assert response.status_code == 200, response.text
+    data = response.json()
+    assert data['title'] == 'Updated title'

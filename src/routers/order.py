@@ -38,3 +38,10 @@ def read_client(
             status_code=404, detail='sorry this order does not exist'
         )
     return db_order
+
+@router.put('/{order_id}', response_model=_schemas.Order)
+def update_order(
+            order_id: int, 
+            order: _schemas.OrderCreate,
+            db: _orm.Session = Depends(_database.get_db)):
+    return _services.update_order(db=db, order=order, order_id=order_id)

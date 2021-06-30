@@ -22,3 +22,17 @@ def get_items(db:_orm.Session, skip:int, limit:int):
 
 def get_item(db: _orm.Session, item_id:int):
     return db.query(_models.Item).filter(_models.Item.id == item_id).first()
+
+def update_item(
+        db: _orm.Session, 
+        item:_schemas.ItemCreate, 
+        item_id:int):
+    db_item=get_item(db=db, item_id=item_id)
+
+    db_item.title = item.title
+    db_item.description = item.description
+    db_item.price = item.price
+
+    db.commit()
+    db.refresh(db_item)
+    return db_item
