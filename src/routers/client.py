@@ -22,6 +22,10 @@ def create(client: _schemas.ClientCreate, db: _orm.Session=Depends(_database.get
     if db_client:
         raise HTTPException(status_code=400, detail="woops the email is in use")
 
+    db_client_phone = _services.get_client_by_phone(db=db, phone_number=client.phone_number)
+    if db_client_phone:
+        raise HTTPException(status_code=400, detail="woops the phone number is in use")
+
     return _services.create_client(db=db, client=client)
 
 @router.get("/", response_model=List[_schemas.Client])
