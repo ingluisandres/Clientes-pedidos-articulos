@@ -1,21 +1,21 @@
 from src.test.app import client
 
-def test_create_user():
+def test_create_client():
     response = client.post(
         "/clients/",
         json={
             "name": "Rodrigo", 
             "last_name": "Robinson", 
-            "email": "wndy031197@gmail.com", 
-            "phone_number":1663456766, 
+            "email": "ingluisandres3@gmail.com", 
+            "phone_number":8116952021, 
             "address":"comanches 14", 
             "postal_code": 88240
         },
     )
     assert response.status_code == 200, response.text
     data = response.json()
-    assert data["email"] == "wndy031197@gmail.com"
-    assert data["phone_number"] == 1663456766
+    assert data["email"] == "ingluisandres3@gmail.com"
+    assert data["phone_number"] == 8116952021
     assert "id" in data
     
     # user_id = data["id"]

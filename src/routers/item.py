@@ -29,5 +29,4 @@ def read_all(
             skip: int=0, 
             limit: int=10, 
             db: _orm.Session=Depends(_database.get_db)):
-    items = _services.get_items(db=db, skip=skip, limit=limit)
-    return items
+    return services.get_items(db=db, skip=skip, limit=limit)

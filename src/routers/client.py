@@ -33,5 +33,6 @@ def read_all(
             skip: int=0, 
             limit: int=10, 
             db: _orm.Session=Depends(_database.get_db)):
+    """Without test"""
     users = _services.get_users(db=db, skip=skip, limit=limit)
     return users
