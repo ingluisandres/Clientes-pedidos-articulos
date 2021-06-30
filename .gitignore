@@ -142,3 +142,6 @@ cython_debug/
 
 # Automatization file
 auto.sh
+
+# test database
+test.db

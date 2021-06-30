@@ -1,7 +1,6 @@
-from typing import List
+from typing import List, Optional
 import pydantic as _pydantic
 import datetime as _dt
-from typing import List, Optional
 
 
 # Client

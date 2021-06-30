@@ -1,12 +1,13 @@
 import sys
-sys.path.append("..") 
+sys.path.append("..")
 
 from fastapi import APIRouter, Depends
 from typing import List
-from services import order as _services
 import sqlalchemy.orm as _orm
-import schemas as _schemas
-import database as _database
+
+from src.services import order as _services
+import src.database as _database
+import src.schemas as _schemas
 
 
 router = APIRouter(

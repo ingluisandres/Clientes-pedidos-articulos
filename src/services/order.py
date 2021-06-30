@@ -1,6 +1,10 @@
+import sys
+sys.path.append("..")
+
 import sqlalchemy.orm as _orm
-import schemas as _schemas
-import models as _models
+
+import src.schemas as _schemas
+import src.models as _models
 
 
 def create_order(db: _orm.Session, order: _schemas.OrderCreate):

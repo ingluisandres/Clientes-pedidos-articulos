@@ -1,8 +1,8 @@
-# Aqui estaran como luciran las tablas
 import sqlalchemy as _sql
 import sqlalchemy.orm as _orm
-import database as _database
 import datetime as _dt
+
+import src.database as _database
 
 
 class Client(_database.Base):

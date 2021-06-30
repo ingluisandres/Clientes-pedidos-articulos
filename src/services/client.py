@@ -1,6 +1,10 @@
+import sys
+sys.path.append("..")
+
 import sqlalchemy.orm as _orm
-import schemas as _schemas
-import models as _models
+
+import src.schemas as _schemas
+import src.models as _models
 
 
 def get_client_by_email(db: _orm.Session, email:str):
