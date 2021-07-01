@@ -8,7 +8,7 @@ import datetime as _dt
 class _ClientBase(_pydantic.BaseModel):
     name: str = Query(..., min_length=2, max_length=20)
     last_name: str = Query(..., min_length=2, max_length=20)
-    email: str = Query(..., min_length=2, max_length=20)
+    email: str = Query(..., min_length=2, max_length=30)
     phone_number: int = Query(..., gt=1000000000)
     address: Optional[str] = Query(None, min_length=3, max_length=50)
     postal_code: Optional[int] = Query(None, gt=10000)

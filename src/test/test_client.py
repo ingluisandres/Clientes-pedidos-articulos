@@ -1,4 +1,4 @@
-from src.test.app import test
+from src.test.conftest import test
 
 
 def test_create_client():
@@ -11,7 +11,7 @@ def test_create_client():
             "phone_number":8116952022, 
             "address":"comanches 14", 
             "postal_code": 88240
-        },
+        }
     )
     assert response.status_code == 201, response.text
     data = response.json()
@@ -24,6 +24,47 @@ def test_create_client():
     assert data["postal_code"] == 88240
 
     assert "id" in data
+
+def test_create_client_invalid_json():
+    response = test.post(
+        "/clients/",
+        json={ 
+            "last_name": "Robinson", 
+            "email": "ingluisandres3@gmail.com", 
+            "phone_number":8116952022, 
+            "address":"comanches 14", 
+            "postal_code": 88240
+        }
+    )
+    assert response.status_code == 422
+
+def test_create_client_duplicate_email():
+    response = test.post(
+        "/clients/",
+        json={ 
+            "name": "Luis", 
+            "last_name": "Contreras", 
+            "email": "ingluisandres3@gmail.com", 
+            "phone_number":8676952022, 
+            "address":"Comanches #15", 
+            "postal_code": 66240
+        }
+    )
+    assert response.status_code == 400
+
+def test_create_client_duplicate_phone_number():
+    response = test.post(
+        "/clients/",
+        json={ 
+            "name": "Luis", 
+            "last_name": "Contreras", 
+            "email": "ingluisandres97@gmail.com", 
+            "phone_number":8116952022, 
+            "address":"Comanches #15", 
+            "postal_code": 66240
+        }
+    )
+    assert response.status_code == 400
 
 
 def test_get_client():
@@ -38,6 +79,11 @@ def test_get_client():
     assert data["address"] == "comanches 14"
     assert data["postal_code"] == 88240
 
+def test_get_client_incorrect_id():
+    response = test.get("/clients/999")
+    assert response.status_code == 404
+    assert response.json()["detail"] == "sorry this client does not exist"
+
 
 def test_update_client():
     response = test.put(
@@ -49,7 +95,7 @@ def test_update_client():
             "phone_number":8116952021, 
             "address":"Comanches 15", 
             "postal_code": 88240
-        },
+        }
     )
     assert response.status_code == 200, response.text
     data = response.json()
@@ -61,6 +107,19 @@ def test_update_client():
     assert data["address"] == "Comanches 15"
     assert data["postal_code"] == 88240
 
+def test_update_client_incorrect_id():
+    response = test.put(
+        "/clients/999",
+        json={
+            "name": "Luis", 
+            "last_name": "Contreras", 
+            "email": "andy031197@gmail.com", 
+            "phone_number":8116952021
+        }
+    )
+    assert response.status_code == 404
+    assert response.json()["detail"] == "sorry this client does not exist"
+
 
 def test_delete_client():
     response = test.delete(f"/clients/1")
@@ -71,3 +130,8 @@ def test_delete_client():
     test_response = test.get(f"/clients/1")
     test_data = test_response.json()
     assert test_data == {'detail': 'sorry this client does not exist'}
+
+def test_delete_client_incorrect_id():
+    response = test.delete("/clients/999")
+    assert response.status_code == 404
+    assert response.json()["detail"] == "sorry this client does not exist"

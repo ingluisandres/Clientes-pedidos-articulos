@@ -1,6 +1,0 @@
-2021-06-30 Application startup: 18:41:47
-2021-06-30 Application shutdown: 18:41:48
-
-2021-06-30 Application startup: 18:41:50
-2021-06-30 Application shutdown: 18:41:50
-

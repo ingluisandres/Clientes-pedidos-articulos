@@ -47,6 +47,11 @@ def update_order(
             order_id: int, 
             order: _schemas.OrderCreate,
             db: _orm.Session = Depends(_database.get_db)):
+    db_order = _services.get_order(db=db, order_id=order_id)
+    if db_order is None:
+        raise HTTPException(
+            status_code=404, detail='sorry this order does not exist'
+        )
     return _services.update_order(db=db, order=order, order_id=order_id)
 
 

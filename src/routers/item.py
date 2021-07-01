@@ -50,6 +50,11 @@ def update_item(
             item_id: int, 
             item: _schemas.ItemCreate,
             db: _orm.Session = Depends(_database.get_db)):
+    db_item = _services.get_item(db=db, item_id=item_id)
+    if db_item is None:
+        raise HTTPException(
+            status_code=404, detail='sorry this item does not exist'
+        )
     return _services.update_item(db=db, item=item, item_id=item_id)
 
 

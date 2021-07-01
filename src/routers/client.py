@@ -56,6 +56,11 @@ def update_client(
             client_id: int, 
             client: _schemas.ClientCreate,
             db: _orm.Session = Depends(_database.get_db)):
+    db_client = _services.get_client(db=db, client_id=client_id)
+    if db_client is None:
+        raise HTTPException(
+            status_code=404, detail="sorry this client does not exist"
+        )
     return _services.update_client(db=db, client=client, client_id=client_id)
 
 
