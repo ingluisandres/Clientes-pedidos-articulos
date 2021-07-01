@@ -2,7 +2,7 @@ import sys
 sys.path.append("..")
 
 from fastapi import APIRouter, Depends, HTTPException
-from typing import List, Optional
+from typing import List
 import sqlalchemy.orm as _orm
 
 from src.services import client as _services
