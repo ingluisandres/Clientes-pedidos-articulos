@@ -1,16 +1,17 @@
 from typing import List, Optional
+from fastapi import Body, Query
 import pydantic as _pydantic
 import datetime as _dt
 
 
 # Client
 class _ClientBase(_pydantic.BaseModel):
-    name: str
-    last_name: str
-    email: str
-    phone_number: int
-    address: Optional[str]
-    postal_code: Optional[int]
+    name: str = Query(..., min_length=2, max_length=20)
+    last_name: str = Query(..., min_length=2, max_length=20)
+    email: str = Query(..., min_length=2, max_length=20)
+    phone_number: int = Query(..., gt=1000000000)
+    address: Optional[str] = Query(None, min_length=3, max_length=50)
+    postal_code: Optional[int] = Query(None, gt=10000)
 
 class ClientCreate(_ClientBase):
     pass
@@ -25,8 +26,8 @@ class Client(_ClientBase):
 
 # Item
 class _ItemBase(_pydantic.BaseModel):
-    title: str
-    description: str
+    title: str = Query(..., min_length=5, max_length=20)
+    description: str = Query(..., min_length=10, max_length=50)
     price: int
 
 class ItemCreate(_ItemBase):
@@ -41,9 +42,9 @@ class Item(_ItemBase):
 
 # Order
 class _OrderBase(_pydantic.BaseModel):
-    client_id: int
-    items_id: int
-    units: int
+    client_id: int = Query(..., gt=0)
+    items_id: int = Query(..., gt=0)
+    units: int = Query(..., gt=0)
 
 class OrderCreate(_OrderBase):
     pass
