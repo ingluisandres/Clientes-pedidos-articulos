@@ -33,14 +33,12 @@ def update_client(
             client:_schemas.ClientCreate, 
             client_id:int):
     db_client=get_client(db=db, client_id=client_id)
-
     db_client.name = client.name
     db_client.last_name = client.last_name
     db_client.email = client.email
     db_client.phone_number = client.phone_number
     db_client.address = client.address
     db_client.postal_code = client.postal_code
-
     db.commit()
     db.refresh(db_client)
     return db_client

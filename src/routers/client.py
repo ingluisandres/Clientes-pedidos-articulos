@@ -1,7 +1,7 @@
 import sys
 sys.path.append("..")
 
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends, HTTPException, status
 from typing import List
 import sqlalchemy.orm as _orm
 
@@ -16,7 +16,7 @@ router = APIRouter(
 )
 
 
-@router.post("/", response_model=_schemas.Client)
+@router.post("/", response_model=_schemas.Client, status_code=status.HTTP_201_CREATED)
 def create(client: _schemas.ClientCreate, db: _orm.Session=Depends(_database.get_db)):
     db_client = _services.get_client_by_email(db=db, email=client.email)
     if db_client:
@@ -28,6 +28,7 @@ def create(client: _schemas.ClientCreate, db: _orm.Session=Depends(_database.get
 
     return _services.create_client(db=db, client=client)
 
+
 @router.get("/", response_model=List[_schemas.Client])
 def read_all(
             skip: int=0, 
@@ -36,6 +37,7 @@ def read_all(
     """Without test"""
     users = _services.get_clients(db=db, skip=skip, limit=limit)
     return users
+
 
 @router.get("/{client_id}", response_model=_schemas.Client)
 def read_client(
@@ -48,12 +50,14 @@ def read_client(
         )
     return db_client
 
+
 @router.put("/{client_id}", response_model=_schemas.Client)
 def update_client(
             client_id: int, 
             client: _schemas.ClientCreate,
             db: _orm.Session = Depends(_database.get_db)):
     return _services.update_client(db=db, client=client, client_id=client_id)
+
 
 @router.delete("/{client_id}")
 def delete_client(

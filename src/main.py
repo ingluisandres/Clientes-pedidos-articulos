@@ -1,3 +1,5 @@
+from datetime import date
+from datetime import datetime
 import sys
 sys.path.append("..")
 
@@ -13,12 +15,24 @@ app = _fastapi.FastAPI()
 _database.create_database()
 
 
+# @app.on_event("startup")
+# async def app_startup():
+#     todays_date = date.today()
+#     now = datetime.now()
+#     current_time = now.strftime("%H:%M:%S")
+#     with open("log.txt", mode="a") as log:
+#         log.write(f"{todays_date} Application startup: {current_time}\n")
+
+
 app.include_router(client.router)
 app.include_router(item.router)
 app.include_router(order.router)
 
 
-@app.on_event("startup")
-async def startup_event():
-    items["foo"] = {"name": "Fighters"}
-    items["bar"] = {"name": "Tenders"}
+# @app.on_event("shutdown")
+# def shutdown_event():
+#     todays_date = date.today()
+#     now = datetime.now()
+#     current_time = now.strftime("%H:%M:%S")
+#     with open("log.txt", mode="a") as log:
+#         log.write(f"{todays_date} Application shutdown: {current_time}\n\n")

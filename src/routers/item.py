@@ -1,7 +1,7 @@
 import sys
 sys.path.append("..")
 
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends, HTTPException, status
 from typing import List
 import sqlalchemy.orm as _orm
 
@@ -16,7 +16,7 @@ router = APIRouter(
 )
 
 
-@router.post("/", response_model=_schemas.Item)
+@router.post("/", response_model=_schemas.Item, status_code=status.HTTP_201_CREATED)
 def create(item: _schemas.ItemCreate, db: _orm.Session=Depends(_database.get_db)):
     db_item = _services.get_item_by_title(db=db, title=item.title)
     if db_item:
@@ -24,12 +24,14 @@ def create(item: _schemas.ItemCreate, db: _orm.Session=Depends(_database.get_db)
 
     return _services.create_item(db=db, item=item)
 
+
 @router.get('/', response_model=List[_schemas.Item])
 def read_all(
             skip: int=0, 
             limit: int=10, 
             db: _orm.Session=Depends(_database.get_db)):
     return services.get_items(db=db, skip=skip, limit=limit)
+
 
 @router.get('/{item_id}', response_model=_schemas.Item)
 def read_item(
@@ -42,12 +44,14 @@ def read_item(
         )
     return db_item
 
+
 @router.put('/{item_id}', response_model=_schemas.Item)
 def update_item(
             item_id: int, 
             item: _schemas.ItemCreate,
             db: _orm.Session = Depends(_database.get_db)):
     return _services.update_item(db=db, item=item, item_id=item_id)
+
 
 @router.delete('/{item_id}')
 def delete_item(

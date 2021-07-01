@@ -25,11 +25,9 @@ def update_order(
         order:_schemas.OrderCreate, 
         order_id:int):
     db_order=get_order(db=db, order_id=order_id)
-
     db_order.client_id = order.client_id
     db_order.items_id = order.items_id
     db_order.units = order.units
-
     db.commit()
     db.refresh(db_order)
     return db_order

@@ -28,11 +28,9 @@ def update_item(
         item:_schemas.ItemCreate, 
         item_id:int):
     db_item=get_item(db=db, item_id=item_id)
-
     db_item.title = item.title
     db_item.description = item.description
     db_item.price = item.price
-
     db.commit()
     db.refresh(db_item)
     return db_item

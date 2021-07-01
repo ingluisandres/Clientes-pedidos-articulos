@@ -10,14 +10,25 @@ def test_create_order():
             "units": 10
         },
     )
-    assert response.status_code == 200, response.text
+    assert response.status_code == 201, response.text
     data = response.json()
+
+    assert data["client_id"] == 1
+    assert data["items_id"] == 1
+    assert data["units"] == 10
+
     assert "id" in data
+
 
 def test_get_order():
     response = test.get(f"/orders/1")
     assert response.status_code == 200, response.text
     data = response.json()
+
+    assert data["client_id"] == 1
+    assert data["items_id"] == 1
+    assert data["units"] == 10
+
 
 def test_update_client():
     response = test.put(
@@ -30,8 +41,11 @@ def test_update_client():
     )
     assert response.status_code == 200, response.text
     data = response.json()
+
     assert data['client_id'] == 5
     assert data['items_id'] == 3
+    assert data["units"] == 2
+
 
 def test_delete_client():
     response = test.delete(f'/orders/1')
